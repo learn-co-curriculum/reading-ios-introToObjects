@@ -10,7 +10,7 @@
 
 [apple_oop_guide_intro]: https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40005149-CH1-SW2
 
-It's natural to wonder, "how can a string of ones and zeroes be referred to as an 'object'?" The use of the word "object" is an abstraction of thought. An "object" in code has no more physical form than does a word in any human language. Sure, words have physical representations: speaking a word causes air to vibrate in a sound wave, ink on a page can be shaped into symbols that represent the word, a meaning can be pointed at or mimed out; but none of these are the word itself. Human language is a system of abstraction: it communicates the *idea* of a thing, but not the thing itself.
+Since all computer code boils down to binary it's natural to wonder, "how can a string of ones and zeroes be referred to as an 'object'?" The use of the word "object" is an abstraction of thought. An "object" in code has no more physical form than does a word in any human language. Sure, words have physical representations: speaking a word causes air to vibrate in a sound wave, ink on a page can be shaped into symbols that represent the word, a meaning can be pointed at or mimed out; but none of these are the word itself. Human language is a system of abstraction: it communicates the *idea* of a thing, but not the thing itself.
 
 ![](https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg)  
 —[*The Treachery of Images*][not_a_pipe], [René Magritte][magritte], 1927  
@@ -30,21 +30,28 @@ A code object representing a water pipe (instead of a smoking pipe) might contai
 
 ### Methods
 
-Object-Oriented Programming, however, requires more than just the bundling up of individual pieces of data in order to represent a "thing"—it also bundles customized functions that can be performed *on* that data. These are called **methods**: behaviors that an object can perform upon its internal data, called "**member variables**". 
+Object-Oriented Programming, however, requires more than just the bundling up of individual pieces of data in order to represent a "thing"—it also bundles customized functions that can be performed *on* that data. These are called **methods**: behaviors that an object can perform upon its internal data, called its "**member variables**". 
 
-Methods are, in effect, functions that can only be called upon the their associated object's instance variables. Without the inclusion of methods into a programming language, those "bundles of data" remain inert except against an outside force (i.e. a global function call). Our coded representation of a `pipe` remains just a hunk of raw material with some interesting attributes but no practical application or usefulness.
+Methods are, in effect, functions that can only be called upon the their associated object's member variables. Without the inclusion of methods into a programming language, those "bundles of data" remain inert except when changed by an outside force (i.e. a global function call). Our coded representation of a `pipe` remains just a hunk of raw material with some interesting attributes but no practical application or usefulness.
 
 However, if it can *perform* a method, such as channeling a water supply from one reservoir to another, our previously inert "bundle of data" now has a *behavior*. It can now be appropriately called an **object**. A `channelWater` method on our `pipe` object might be written to accomplish the task of moving water a distance equivalent to the `pipe`'s `length` value and at a flow rate based upon its `diameter` value.
 
-### Member Variables
+### Property Basics
 
-In the previous lessons, you got practiced with declaring and setting local variables. **Member variables** are just like local variables except that a member variable belongs to another object's **member group**. The member group consists of the 
+In the previous lessons, you got practiced with declaring and setting local variables. **Properties** are just like local variables except that a property is a component of forming a larger object.
 
-The `length` value of our `pipe` object from above is one of its member variables, as are `diameter`, `material`, and `manufacturer` (which together make up our `pipe`'s member group). If `length` is an integer variable, then it will function in the same ways that any local integer variable will; it is a member variable only in that it is an essential part of our `pipe` object.
+The `length` value of our `pipe` object from above would be programmed as a property—as would `diameter`, `material`, and `manufacturer`. Together, these make up the information that represents our abstraction of a pipe, which in our code we have named `pipe`. 
 
-The `diameter` member variable might be a float value, while the `material` and ` manufacturer` member variables might be stored as strings. A string object that is a member variable is still a string in every way, and contains its own member variables that are assembled to represent the text that it holds.
+If the `length` property is an integer variable, then it will itself function in the same ways that any local integer variable will function, but with the added association of being a component of `pipe` object. The `diameter` property might be a float value, while the `material` and ` manufacturer` properties might be strings. A string object that is a property is still a string in every way, and contains its own properties that are assembled to represent the text that it holds.
 
-**Advanced:** *In Objective-C,* `NSString` *objects contain an member variable that is a C-array of* `char`*s, a C-language primitive that represents a single letter.* 
+#### Dot Notation
+
+
+
+
+
+
+
 
 ## Class Versus Instance
 
@@ -53,9 +60,12 @@ The `diameter` member variable might be a float value, while the `material` and 
 
 [imdb_potc]: http://www.imdb.com/title/tt0325980/?ref_=nv_sr_2
 
-If we were to write a program that simulates naval combat, we might start by creating a `ship` object that contains member variables which detail all of the data for a naval warship: `name`, `rating`, `shipClass`, `length`, `beam`, `keel`, `displacement`, `captain`, `crew`, `topSpeed`, `currentSpeed`, `heading`, `hullCondition`, `armament`, `ammunition`, `rumSupply`, and so on. 
+If we were to write a program that simulates naval combat, we might start by creating a `ship` object with properties that detail all of the data for a naval warship: `name`, `rating`, `shipClass`, `length`, `beam`, `keel`, `displacement`, `captain`, `crew`, `topSpeed`, `currentSpeed`, `heading`, `hullCondition`, `armament`, `ammunition`, `rumSupply`, and so on. 
 
-What if we had to manually declare *every* member variable for *every* warship that we wish to have in our simulation program? That's a lot of variable declarations! But every warship in our simulation will have data for each of these fields; it would save us a lot of work if we could find some way of creating a "warship" template, and then populate the data for each separate warship when we copy the template.
+What if we had to manually declare the value of *every* property for *every* warship that we wish to have in our simulation program? That's a lot of variable declarations! But every warship in our simulation will have data for each of these fields; it would save us a lot of work if we could find some way of creating a "warship" template, and then populate the data for the properties of each separate warship whenever we copy the template.
+
+![](https://upload.wikimedia.org/wikipedia/commons/0/0a/Battle_Group_Alpha_%28Midway%2C_Iowa%29_underway%2C_1987.jpg)  
+—*Battle Group Alpha (*Midway*,* Iowa*) underway, 1987*, [image by US Navy](https://en.wikipedia.org/wiki/File:Battle_Group_Alpha_(Midway,_Iowa)_underway,_1987.jpg)
 
 This is exactly what [Ole-Johan Dahl][ojd] and [Kristen Nygaard][kristen_nygaard] realized as they worked on developing the [Simula I and Simula 67 languages][simula] in the 1960s. Simula introduced the concept of **class** and **instance** (among other breakthroughs), and was a language that was instrumental in the development of [Smalltalk][smalltalk], the first fully-realized object-oriented programming language, at [Xerox PARC][parc] in the 1970s.
 
@@ -67,138 +77,66 @@ This is exactly what [Ole-Johan Dahl][ojd] and [Kristen Nygaard][kristen_nygaard
 
 If we can set up the template for the warships (let's call it "Warship", capitalized), then we've outlined the data points that are necessary for creating an individual "warship" (lowercase). In the object-oriented paradigm, the template "Warship" is referred to as the `Warship` **class**, and all individual "warship"s created from the "Warship" template are referred to as **instances** of the `Warship` class.
 
-Maritime tradition often uses similar language when describing the design form (or "class") of a ship. The U.S.S. *New Jersey* (BB-62), for example, is an *Iowa*-class battleship; the ship class being named after that design's "lead ship", or first constructed ship, in this case, the U.S.S. *Iowa* (BB-61). Two other *Iowa*-class battleships were commissioned by the U.S. Navy, the U.S.S. *Missouri* (BB-63) and the U.S.S. *Wisconsin* (BB-64). For our purposes, we could describe each of the four battleships as **instances** of the "*Iowa*-class battleship" **class**.
+Maritime tradition often uses similar language when describing the design form (or "class") of a ship. The [USS *New Jersey* (BB-62)][uss_new_jersey], for example, is an [*Iowa*-class battleship][iowa_class]; the ship class being named after that design's "lead ship", or first constructed ship, in this case, the [USS *Iowa* (BB-61)][uss_iowa]. Two other *Iowa*-class battleships were commissioned by the U.S. Navy, the [USS *Missouri* (BB-63)][uss_missouri] and the [USS *Wisconsin* (BB-64)][uss_wisconsin]. For our purposes, we could describe each of the four battleships as **instances** of the "*Iowa*-class battleship" **class**.
+
+[iowa_class]: https://en.wikipedia.org/wiki/Iowa-class_battleship
+[uss_iowa]: https://en.wikipedia.org/wiki/USS_Iowa_(BB-61)
+[uss_new_jersey]: https://en.wikipedia.org/wiki/USS_New_Jersey_(BB-62)
+[uss_missouri]: https://en.wikipedia.org/wiki/USS_Missouri_(BB-63)
+[uss_wisconsin]: https://en.wikipedia.org/wiki/USS_Wisconsin_(BB-64)
+
+![](https://upload.wikimedia.org/wikipedia/commons/7/70/USS_Missouri_transfers.JPG)
+—*USS Missouri (BB-63) (at left) transferring personnel to USS Iowa (BB-61), while operating off Japan on 20 August 1945.*, [image by US Navy](https://en.wikipedia.org/wiki/File:USS_Missouri_transfers.JPG)
+
+**//Flat-fact:** *The* Iowa*-class was the largest and final battleship design of the US Navy, whose four ships saw intermittent service from 1943 until 1992, a span of nearly fifty years. Between them, participated in five US wars (including the Cold War) and the* Iowa*-class is the only WWII ship class whose entire membership still survives. Each of the four ships were donated by the US Navy to preservation society who maintain them in maritime museums across the United States.*
+
+All four of the individual battleships may have slight differences in measurements, but each share a common set of attributes such as having a length of 887 feet (270 m), a beam of 108 feet (33 m), nine 16-inch primary guns, and twenty 5-inch secondary guns. While their individual displacement tonnage, crew complements, and specific armaments varied across their service careers, the specific values of these "member variables" are not part of what defines each ship as an *Iowa*-class battleship, but rather, the *possession* of these attributes is what does.
+
+### Member Variables vs. Instance Variables
+
+When we create an instance object, its member variables can (and should) get populated with individual pieces of data whose values are not shared by other instance objects of the same class. The term "**instance variable**" refers specifically to these pieces of data that are associated with an instance object.
+
+An instance of our `Warship` class (let's call it `ussIowa`) which has a member variable for `length`, will have an instance variable for the "length" attribute associated with that ship. In Objective-C, the instance variable is typically denoted by prefixing the member variable's name with an underscore (`_`), so `_length` would be the conventional name for `ussIowa`'s instance variable that contains the information associated with the "length" attribute.
+
+**Top-tip:** *It is bad practice to access an instance variable directly unless within the context of an initializer, setter, or getter method implementation. Otherwise, you should rely on these methods to read from and write to the instance variable itself.* 
+
+
+## Accessing A Property
+
+When we set up our `Warship` class, its member variables `name`, `length`, `beam`, `keel`, etc., would most likely get programmed as *properties*. A **property** generally refers to a toolset of three things: an instance variable, a setter method, and a getter method.
+
+The **instance variable** is the actual piece of data that the property manages, typically named after the property but prefixed with and underscore (`_`).
+
+The **setter** is a method that is responsible for writing to the instance variable, typically named after the property that it writes to (or "sets"), but is prefixed with "`set`", as in `setLength:` for the `length` property.
+
+The **getter** is a method that is responsible for reading the instance variable, typically named after the property whose value it retrieves (or "gets"), as in `length` (method) for the `length` property.
+
+**Advanced:** *A read-only property is, in effect, just an instance variable with no associated setter method—only a getter method.*
+
+Whenever possible, use the setters and getters to interact with an instance variable. Avoid modifying it directly.
+
+You've already interacted with the `count` getter method on arrays:
 
 
 
 
 
 
-### Classes Are ~~People~~ Objects Too
 
+
+
+## The Class Object
+
+
+
+### Metaphor of the Printing Press
+
+
+### Class Methods
 
 
 ^^^Mark^^^
 
-## Difference between an instance and a class
-
-In order to explain classes vs. instances, let's use another analogy. 
-
-A human being has a set of standard properties (arms, legs, vision, height, weight, sense of humor, etc.)
-
-But the specifics of those differ by individual. While most folks have two arms and legs, other properties such as height, weight, and sense of humor are more variable across individuals.
-
-Likewise, there are behaviors of the entire race of humans and there are behaviors that apply just to the writer of this lesson, an individual. I (the writer) might be a class clown, but not all humans are class-clowns. All humans (well, most) think for themselves. That is a behavior of the entire class of human beings.
-
-So you can think of the class as applying to every individual human being, and the instance as just a copy of the details of the class applying to a specific person (we're all just a carbon copy of each other, with our little bits of DNA that are slightly different.) That said, if we all become zombies one day, we might need to change the behavior (method) of thinking for ourselves, to simpler behavior applying to the entire class of humans such as "not thinking much."
-
-######Example 
-```objc
-
-- (void)thinkForOurselves:(NSString *)whatIAmThinking {
-	
-	NSLog(@"%@",whatIAmThinking);
-}
-
-```
-
-######Example
-```objc
-
-+ (void)notThinkingMuch {
-	
-	NSLog(@"GIVE ME FOOOOOOOD.")
-}
-```
-
-Notice the primary difference between the two above methods is that one begins with a `+` and the other with a `-`. The `+` indicates that this is a class method. It applies to the entire class of an object. If we were all zombies, we would all think about food all the time and not much else, so this applies to the entire class. On the other hand, if we are all individuals, we all have our own thoughts, and with the creation of each `Human` object, we can run the method `thinkForOurselves:` (and log our own thoughts.)
-
-When we call instance methods, we either call the method with the instance as the "receiver." If we call the instance method within the instance's class, we refer to the receiver as `self`.
-
-
-######Example
-```objc
-//Human.m
-
-@interface Human()
-
-- (void)thinkForOurselves:(NSString *)whatIAmThinking;
-- (void)buyALotteryTicket;
-
-@end
-
-@implementation Human
-
-- (void)buyALotteryTicket
-{
-	[self whatIAmThinking:@"Will I win the lottery?"];
-}
-
-- (void)thinkForOurselves:(NSString *)whatIAmThinking {
-	
-	NSLog(@"%@",whatIAmThinking);
-}
-
-...
-
-@end
-```
-
-######Example
-```objc
-//ClassOtherThanHuman.m
-
-#import "Human.h";
-
-@interface
-
-- (void)methodThatIsInterestedInWhatASpecificHumanIsThinking:(NSString *)whatAHumanIsThinking;
-
-@end 
-
-@implementation ClassOtherThanHuman
-
-- (void)methodThatIsInterestedInWhatASpecificHumanIsThinking:(NSString *)whatAHumanIsThinking
-{
-	Human *aNewHuman = [Human alloc] init];
-	[aNewHuman whatIAmThinking:whatAHumanIsThinking];
-}
-
-...
-
-@end
-```
-However, when we call class methods, we call the method with the class as the receiver, whether we are calling the method from within the same class or another class.
-
-######Example
-```objc
-//Zombie.m
-
-@interface Zombie()
-
-+ (void)notThinkingMuch
-- (void)buyALotteryTicket;
-
-@end
-
-@implementation Zombie
-
-+ (void)notThinkingMuch {
-	
-	NSLog(@"GIVE ME FOOOOOOOD.")
-}
-
-- (void)interactWithAnotherZombie
-{
-	[Human notThinkingMuch];
-}
-
-...
-
-@end
-```
-
-Keep in mind, whereas normally we might call a class method from within an instance method, or an instance method from within an instance method, we *cannot* call an instance method in a class method. If you try to do so, you will get the following error message from the linter.
 
 ## Instance variables and Properties
 
