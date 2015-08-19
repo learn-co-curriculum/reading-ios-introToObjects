@@ -1,340 +1,169 @@
-#Objects
+# Introduction to Object Orientation
 
-## What is an object?
+## Objectives
 
-Back in the day, we had procedural programming. 
+1. Understand programming paradigms as a form of human abstraction.
+2. Learn the distinguishing characteristics of Object Oriented Programming (OOP).
+3. Define the terms "methods" and "properties" in the context of OOP.
+4. Use dot notation to access an object's properties.
+5. Chain dot notation to access a property of a property.
 
-######Example (in BASIC)
-```
-READY
-10 PRINT "Hello there."
-20 INPUT "Do you like me? (Type y or n)"; ans$
-30 IF ans$ = "n" then GOTO 50
-40 END "Cool. I like you too!"
-50 PRINT "Maybe you didn't understand the question. Let me ask it again."
-60 GOTO 20
-```
+## Programming Paradigms and Languages
 
-Then, programmers made a transition to naming blocks of code, which became known as functions or methods. All of a sudden instead of going to a specific line number we could say something that was somewhat english-y to tell the program what code we wanted to run next and call it by name.
+*An object-oriented approach to application development makes programs more intuitive to design, faster to develop, more amenable to modification, and easier to understand.*  
+—[*Object-Oriented Programming with Objective-C*][apple_oop_guide_intro], Apple Inc.
 
-######Example (in C)
+[apple_oop_guide_intro]: https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40005149-CH1-SW2
 
-```
-void DisplayWhoIAm(){
-    printf("I am the writer of this tutorial!");
-}
-```
+Object-oriented programming (OOP) is a "[programming paradigm](https://en.wikipedia.org/wiki/Programming_paradigm)"—meaning that it is an *approach* to writing code. There exists a variety of paradigms in the software industry which overlap with or build on top of other paradigms, such as the procedural, structured, and functional programming paradigms.
 
-But then we realized that digital life really reflects our real lives, in many ways. And object-oriented programming was born. In the 1970's, Alan Kay developed an object-oriented language at Xerox Parc called Small Talk, the language to be used in the first personal computer. Coincidentally, Objective-C, the language used for developing in iOS / OS X was built based on the style of Small Talk.
+Programming *languages* are said to follow or "fit into" programming paradigms. Some languages follow a single paradigm rather strictly, such as Objective-C with object-orientation, but a number of languages can be classified as "[multi-paradigm](https://en.wikipedia.org/wiki/Comparison_of_multi-paradigm_programming_languages)", meaning, as you would expect, that they contain primary elements of more than one paradigm. Such is the case with Ruby and Python which both qualify as object-oriented languages but which also heavily rely on functional programming techniques as well.
 
-## Behaviors of objects
+### Levels of Abstraction
 
-So, today we have objects, which have behaviors and attributes associated with them. Think of them as a set of related functions (methods) and properties, that as a human being, we can make sense of. We "encapsulate" (think: box up) all of these related methods and properties in one place, and then give it a name, the name of the object. The box we keep all of these methods and properties in is our Class. It serves as the instruction manaul or factory to create a specific type of object.
+All of these "high-level" programming languages are forms of human abstraction. The terminology of "high-level" versus "low-level" languages are relative terms used to express how far removed that language is from the CPU's understanding of it. The lowest level of programming is [machine language](https://en.wikipedia.org/wiki/Machine_code) (also "machine code") which is essentially some defined way of interpreting actual binary (ones and zeroes). CPUs can only execute (i.e. run) code that's been translated into the binary that it can understand.
 
-Think about it. Let's take a `Car` class as an example. A `Car` has attributes (aka properties) such as its `color` and its `make` and `model` and `year` and `numberOfDoors`. It also has behaviors (aka methods). Its engine can be turned on and off. It can accelerate and brake. And it can signal the direction it is turning (well, perhaps with the help of its driver object.) The combination of all of this information in one place defines a `Car`. This is the `Car` class, with which we can make `Car` objects (also known as instances).
+![](https://curriculum-content.s3.amazonaws.com/ios-intro-to-objects-unit/machine_code.jpeg)  
+—Machine language is scary. *Machine language monitor in a W65C816S single-board computer, displaying code disassembly, as well as processor register and memory dumps.* [Wikimedia Commons](https://en.wikipedia.org/wiki/Machine_code#/media/File:W65C816S_Machine_Code_Monitor.jpeg)
 
-######Example
-```objc
-//  Car.m
+The trouble with programming in machine language is that it's nigh-unreadable to humans. So, [assembler languages](https://en.wikipedia.org/wiki/Assembly_language) (also "assembly") were developed to make programming a little easier to understand. Assembler languages are still closely related to CPUs and translate pretty readily in machine code. If the machine that you're reading this on has an Intel or AMD CPU, it almost certainly runs on some version of [x86-64 assembler](https://en.wikipedia.org/wiki/X86-64). 
 
-@interface Car ()
+![](https://curriculum-content.s3.amazonaws.com/ios-intro-to-objects-unit/assembly_language.png)  
+—Assembly language is still pretty scary. *Motorola MC6800 Assembly listing, showing original assembly language and the assembled form* [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Motorola_6800_Assembly_Language.png)
 
-@property (strong, nonatomic) NSNumber *numberOfDoors;
-@property (strong, nonatomic) NSString *make;
-@property (strong, nonatomic) NSString *model;
-@property (strong, nonatomic) NSString *year;
+However, assembler is still pretty technical, requiring micro-management instructions for every single operation. So "high-level" or "third-level" languages were developed to bring increased readability via increased abstraction. Third-level languages are compiled down to assembler (which is then compiled down to machine code). Some of the earliest and most recognizable third-level languages include Fortran, Cobol, and [C][c].
 
-- (void)accelerate;
-- (void)decelerate;
-- (void)signalTurnToDirection:(NSString *)direction;
-- (void)toggleEngine:(BOOL)isOn;
+[c]: https://en.wikipedia.org/wiki/C_(programming_language)
 
-@end
+```c
+#include <stdio.h>
 
-@implementation Car
-...
-@end
-```
-
-## Difference between an instance and a class
-
-In order to explain classes vs. instances, let's use another analogy. 
-
-A human being has a set of standard properties (arms, legs, vision, height, weight, sense of humor, etc.)
-
-But the specifics of those differ by individual. While most folks have two arms and legs, other properties such as height, weight, and sense of humor are more variable across individuals.
-
-Likewise, there are behaviors of the entire race of humans and there are behaviors that apply just to the writer of this lesson, an individual. I (the writer) might be a class clown, but not all humans are class-clowns. All humans (well, most) think for themselves. That is a behavior of the entire class of human beings.
-
-So you can think of the class as applying to every individual human being, and the instance as just a copy of the details of the class applying to a specific person (we're all just a carbon copy of each other, with our little bits of DNA that are slightly different.) That said, if we all become zombies one day, we might need to change the behavior (method) of thinking for ourselves, to simpler behavior applying to the entire class of humans such as "not thinking much."
-
-######Example 
-```objc
-
-- (void)thinkForOurselves:(NSString *)whatIAmThinking {
-	
-	NSLog(@"%@",whatIAmThinking);
-}
-
-```
-
-######Example
-```objc
-
-+ (void)notThinkingMuch {
-	
-	NSLog(@"GIVE ME FOOOOOOOD.")
-}
-```
-
-Notice the primary difference between the two above methods is that one begins with a `+` and the other with a `-`. The `+` indicates that this is a class method. It applies to the entire class of an object. If we were all zombies, we would all think about food all the time and not much else, so this applies to the entire class. On the other hand, if we are all individuals, we all have our own thoughts, and with the creation of each `Human` object, we can run the method `thinkForOurselves:` (and log our own thoughts.)
-
-When we call instance methods, we either call the method with the instance as the "receiver." If we call the instance method within the instance's class, we refer to the receiver as `self`.
-
-
-######Example
-```objc
-//Human.m
-
-@interface Human()
-
-- (void)thinkForOurselves:(NSString *)whatIAmThinking;
-- (void)buyALotteryTicket;
-
-@end
-
-@implementation Human
-
-- (void)buyALotteryTicket
+int main(void)
 {
-	[self whatIAmThinking:@"Will I win the lottery?"];
+    printf("hello, world\n");
 }
-
-- (void)thinkForOurselves:(NSString *)whatIAmThinking {
-	
-	NSLog(@"%@",whatIAmThinking);
-}
-
-...
-
-@end
 ```
+—*Hello, World* in C, from [Wikipedia][c]
 
-######Example
-```objc
-//ClassOtherThanHuman.m
+The [C language][c] is a procedural language that has become one of the most widely used programming languages in the world. Originally developed by [Dennis Ritchie](https://en.wikipedia.org/wiki/Dennis_Ritchie) at Bell Labs between 1969 and 1973, it still forms the basis of many contemporary programming languages and operating systems. Objective-C, Ruby, Java, Swift, and Python are all [C-family](https://en.wikipedia.org/wiki/List_of_C-family_programming_languages) languages that extend C's functionality into object-orientation. But yet, these high levels of abstraction are all compiled down to machine code when the application is run.
 
-#import "Human.h";
+## Object-Oriented Programming (OOP)
 
-@interface
+### This Is Not An Object
 
-- (void)methodThatIsInterestedInWhatASpecificHumanIsThinking:(NSString *)whatAHumanIsThinking;
+Since all computer code boils down to binary, it's natural to wonder "how can a string of ones and zeroes be referred to as an 'object'?" The use of the word "object" is another abstraction of thought. An "object" in code has no more physical form than does a word in any human language. Sure, words have physical representations: speaking a word causes air to vibrate in a sound wave, ink on a page can be shaped into symbols that represent the word, a meaning can be pointed at or mimed out; but none of these are the word itself. Human language is also a system of abstraction: it communicates the *idea* of a thing, but not the thing itself.
 
-@end 
+![](https://curriculum-content.s3.amazonaws.com/ios-intro-to-objects-unit/MagrittePipe.jpg)    
+—[*The Treachery of Images*][not_a_pipe], [René Magritte][magritte], 1927  
+trans. "This is not a pipe."
 
-@implementation ClassOtherThanHuman
+[not_a_pipe]: https://en.wikipedia.org/wiki/The_Treachery_of_Images
+[magritte]: https://en.wikipedia.org/wiki/Ren%C3%A9_Magritte
 
-- (void)methodThatIsInterestedInWhatASpecificHumanIsThinking:(NSString *)whatAHumanIsThinking
-{
-	Human *aNewHuman = [Human alloc] init];
-	[aNewHuman whatIAmThinking:whatAHumanIsThinking];
-}
+This image of a pipe is no more a pipe than the word "pipe" is a pipe; in the same way, a code object named `pipe` is not a pipe, but only another form of representing the *idea* of a pipe.
 
-...
+>As humans, we’re constantly faced with myriad facts and impressions that we must make sense of. To do so, we must abstract underlying structure away from surface details and discover the fundamental relations at work. Abstractions reveal causes and effects, expose patterns and frameworks, and separate what’s important from what’s not. Object orientation provides an abstraction of the data on which you operate; moreover, it provides a concrete grouping between the data and the operations you can perform with the data—in effect giving the data behavior.  
+>—[*Object-Oriented Programming with Objective-C*][apple_oop_guide_oop], Apple Inc.
 
-@end
-```
-However, when we call class methods, we call the method with the class as the receiver, whether we are calling the method from within the same class or another class.
+[apple_oop_guide_oop]: https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/OOP_ObjC/Articles/ooOOP.html#//apple_ref/doc/uid/TP40005149-CH8-SW3
 
-######Example
-```objc
-//Zombie.m
+A code object representing a water pipe (instead of a smoking pipe) might contain values for `length`, `diameter`, `material`, and `manufacturer`. The bundling of these individual pieces of information together begins to form a larger whole.
 
-@interface Zombie()
+### Methods
 
-+ (void)notThinkingMuch
-- (void)buyALotteryTicket;
+Object-Oriented Programming, however, requires more than just the bundling up of individual pieces of data in order to represent a "thing"—it also bundles customized functions that can be performed *on* that data. These are called **methods**: behaviors that an object can perform upon its internal data, which are its "**properties**". 
 
-@end
+Methods are, in effect, functions that can only be called upon their associated object's properties. Without the inclusion of methods into a programming language, those "bundles of data" remain inert except when changed by an outside force (i.e. a global function call). Our coded representation of a `pipe` remains just a hunk of raw material with some interesting attributes but no practical application or usefulness.
 
-@implementation Zombie
+However, if it can *perform* a method, such as channeling a water supply from one reservoir to another, our previously inert "bundle of data" now has a *behavior*. It can now be appropriately called an **object**. A `channelWater` method on our `pipe` object might be written to accomplish the task of moving water a distance equivalent to the `pipe`'s `length` value and at a flow rate based upon its `diameter` value.
 
-+ (void)notThinkingMuch {
-	
-	NSLog(@"GIVE ME FOOOOOOOD.")
-}
+### Property Basics
 
-- (void)interactWithAnotherZombie
-{
-	[Human notThinkingMuch];
-}
+In the previous lessons, you practiced declaring and setting local variables. A **property** is just like a local variable except that a property is a component of forming a larger whole—called an 'object'.
 
-...
+The `length` value of our `pipe` object from above would be programmed as a property—as would `diameter`, `material`, and `manufacturer`. Together, these make up the information that represents our abstraction of a pipe, which in our code we have named `pipe`. 
 
-@end
-```
+If the `length` property is an integer variable, then it will itself function in the same ways that any local integer variable will function, but with the added association of being a component of the `pipe` object. The `diameter` property might be a float value, while the `material` and ` manufacturer` properties might be strings. A string object that is a property is still a string in every way, and contains its own properties that when assembled represent the text that it holds.
 
-Keep in mind, whereas normally we might call a class method from within an instance method, or an instance method from within an instance method, we *cannot* call an instance method in a class method. If you try to do so, you will get the following error message from the linter.
+#### Dot Notation
 
-## Instance variables and Properties
+The best-practice way to interact with a property, and the way suggested by Apple, is by using dot (`.`) notation. This syntax can be used for either setting (writing to) or getting (reading from) a property's value—unless, of course, that property is read-only (or "write-protected").
 
-That said, instance variables apply to instances! Therefore when being used, we should not expect them to apply to the entire class. In other words, if you haven't told our program how funny I am explicitly, it won't know (or at best, it will set me, an instance of the class `HumanBeing`, to have a default standard level of humor, instead of the ROFL level of humor with which I should actually be attributed.)
-
-And again, since instance variables apply to specific instances, they may not be called within class methods.
-
-## Initializers 
-
-Let's say though that we do want to setup a default set of arms, legs, height, weight, and sense of humor. We can do that when we "initialize" a new instance of `Human`. What does initialization mean in the context of programming? Well, think of the class `HumanBeing` as the instruction manual for creating a `Human` object. When we initialize a new instance of a `Human`, we are really giving that instance of the `Human` being all of the properties and behaviors of the class. Initialization is the point at which the `Human` instance becomes formed, or is born, you might say. And every human is born with some innate properties. Generally speaking, the default initialization of a `Human` includes 2 arms, 2 legs, 7.5 lbs, 20 inches long, and no sense of humor. (Babies don't laugh for a few weeks to months!) 
-
-Additionally, every `Human` has a name. And it wouldn't make much sense for a `Human` to be nameless. So, we use custom initializers to ensure that the required properties of a `Human` are setup from the start and never `nil`. 
-
-Here's how that might look:
-
-######Example
-```objc
-//Human.m
-
-#import "Human.h";
-
-...
-
-@implementation Human
-
-- (instancetype)init
-{
-	self = [super init];
-
-	if (self) 
-	{
-		_name = @"Average Joe"
-		_weight = 7.5;
-		_height = 20;
-		_arms = 2;
-		_legs = 2;
-		_senseOfHumor = @"average";
-	}
-
-	return self;
-}
-
-@end
-
-```
-
-Line by line, this code is first making sure our superclass is initialized. It is an odd line of code but will always exist in our designated initializer. There will only be one designated initializer in the class. All others will point to this initializer. (You will see this in our next example.)
-
-Then, assuming we initialize our superclass successfully, we will initialize all of the instance variables of our class.
-
-And finally, we return ourselves, fully formed!
-
-But what if we don't want to wait to hold an in-depth conversation with them about computer programming? In that case we would like to build a custom initializer that allows us to set the properties of our new `Human` object such that they are more of an adult from the start (or an oversized baby?)
+The `length`, `uppercaseString`, and `lowercaseString` methods on `NSString` that we've used repeatedly in previous lessons are actually the "getter" methods for properties by the same name. Calling them as methods is valid syntax:
 
 ```objc
-//Human.m
+// method syntax (valid)
 
-#import "Human.h";
+NSString *magritte = @"Leci n`est pas une pipe.";
 
-...
-
-@implementation Human
-
-- (instancetype)initWithName:(NSString *)name WeightInPounds:(NSNumber *)weight HeightInInches:(NSNumber *)height SenseOfHumor:(NSString *)senseOfHumor 
-{
-	self = [super init];
-
-	if (self) 
-	{
-		_name = name;
-		_weight = weight;
-		_height = height;
-		_senseOfHumor = senseOfHumor;
-		_arms = 2;
-		_legs = 2;
-	}
-
-	return self;
-}
-
-- (instancetype)init
-{
-	return [self initWithName:@"Average Joe" WeightInPounds:7.5 HeightInInches:20 SenseOfHumor:@"average"];
-}
-
-@end
+NSLog(@"Length: %lu", [magritte length]);
+NSLog(@"%@", [magritte uppercaseString]);
+NSLog(@"%@", [magritte lowercaseString]);
+```
+This will print:
 
 ```
-Here we have both a designated initializer (`initWithName:WeightInPounds:HeightInInches:SenseOfHumor:`) and what we call the default initializer (`init`). Our designated initializer is also known as a convenience initializer, because it provides us the convenience of initializing the properties of our `Human` instance all up front. Note also the fact that our designated initializer has the boilerplate code that checks to ensure our super class has been initialized, while our default only returns values to the designated initializer. This is what we meant earlier when we said that other initializers point us to the designated initializer.
+Length: 24
+LECI N`EST PAS UNE PIPE.
+leci n`est pas une pipe.
+```
+But, it's actually better practice to use dot notation when accessing properties:
 
-## Public vs. Private methods
-
-If you place a method or property in your `.h` file, it will be "public", visible to other classes / users of the class in which those methods or properties are declared and defined.
-
-######Example
 ```objc
-//Human.h
+// dot notation (preferred)
 
-@interface Human : NSObject
+NSString *magritte = @"Leci n`est pas une pipe.";
 
-@property (nonatomic, strong) NSNumber *weight;
-@property (nonatomic, strong) NSNumber *height;
-
-- (void)socializeWithAnotherHuman:(Human *)otherHuman;
-
-@end
+NSLog(@"Length: %lu", magritte.length);
+NSLog(@"%@", magritte.uppercaseString);
+NSLog(@"%@", magritte.lowercaseString);
 ```
+This will also print:
 
-If you place a method or property in your `.m` file, it will be "private", and only visible to other users of the class in which those methods and/or properties are defined. Just an aside: Methods and properties defined in your .m are not actually unavailable to a third party; however, they do not announce themselves either. Someone who really wanted to know what the insides of your classes looked like could get in their and check out your classes' innards. (In fact, programmers do this regularly with Apple's proprietary Cocoa framework!) 
+```
+Length: 24
+LECI N`EST PAS UNE PIPE.
+leci n`est pas une pipe.
+```
+**Advanced:** *Using* `self.property` *allows access to a property within the same file.*
 
-######Example
+#### Chaining Dot Notation
+
+One of the values of dot notation is the ability to daisy-chain properties without having to nest method calls. With method syntax, the enclosing square brackets quickly pile up:
+
+**Note:** *In this next example, we're going to experiment with uppercasing and then lowercasing the German word "Straße". The uppercase form of the "ß" ("ess-tsett") character is "SS", which then gets lowercased into "ss". This has the side effect of changing the length of the string.*
+
 ```objc
-//Human.m
+// method syntax (valid)
 
-@interface Human()
+NSString *strasse = @"Straße";
 
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, strong) NSNumber *birthdate;
-
-- (NSString *)sayHi
-{
-	return @"Hi!";
-}
-
-@end
-
+NSLog(@"Length: %lu", [strasse length]);
+NSLog(@"Length: %lu", [[[strasse uppercaseString] lowercaseString] length]);
 ```
 
-The thing to keep in mind, and how to decide whether something belongs in the `.h.` or `.m` file, is this: When you put something in your `.h` file you are responsible to the classes' users of that method. So, in order to avoid excess accountability, we try to keep things private. In other words, if you are not sure whether a method should be public or private, you should default to making it private.
+This will print:
 
-##Collections of Objects
+```
+Length: 6
+Length: 7
+```
 
-As you become more familiar with objects, you'll begin to realize that an object's properties are really just other objects. Until now, those objects were standard data types such as `NSString` or `NSNumber`. But once we build our own objects, they also may be properties of an object. For instance, consider the `House` object. Every `House` has `Room` objects, it is painted a certain `color`, and is a certain number of `squarefeet`. So our house interface might look like this, with some added properties:
+But writing it out in dot notation provides a much cleaner syntax:
 
-######Example
 ```objc
+// dot notation (preferred)
 
-//  House.m
+NSString *strasse = @"Straße";
 
-#import "Room.h"
-#import "Chimney.h"
-#import "WaterHeater.h"
-@interface House ()
-
-@property (strong, nonatomic) NSArray *rooms;
-@property (strong, nonatomic) NSArray *chimneys;
-@property (strong, nonatomic) NSNumber *squarefeet;
-@property (strong, nonatomic) NSNumber *floors;
-@property (strong, nonatomic) NSString *color;
-@property (strong, nonatomic) WaterHeater *waterHeater;
-
-@end
-
-@implementation House
-...
-@end
+NSLog(@"Length: %lu", strasse.length);
+NSLog(@"Length: %lu", strasse.uppercaseString.lowercaseString.length);
 ```
 
-Besides our standard `NSString` and `NSNumber` objects above, we have collections of custom objects. Somewhere in our project there is a `Room` class, and another class called `Chimney`, and these classes define the properties of a `Room` and a `Chimney`, respectively. This allows us to really capture the complexity at any level of granularity we wish. There is also a `WaterHeater` class, and given each home has only one `WaterHeater` by default, the property for this custom object is not a collection. 
+This will also print:
 
-Some folks we have spoken with in the past have had trouble with separating this concept from inheritance. Let us be clear now -- a room is not a subclass, or type of house. A room is in a house, but a `Room` is not a type of `House`, nor is a `Chimney` a type of `House`. If we had a class called `Residence`, then `House` might inherit from that class, because it is a type of `Residence` (as is `Apartment`, `Condo`, `Yurt`, and `MobileHome`). 
-
-There is a major difference between an object being made up of other objects as in the case of `House` and `Room` or `Engine` and `Cylinders`, and an object being a subclass or type of another object as with `Residence` and `House`. Be sure to read up on inheritance as well if you haven't already, and make sure you understand the difference between these concepts!
+```
+Length: 6
+Length: 7
+```
+Using dot notation improves readability and avoids the stumbling block of counting a group of brackets.
