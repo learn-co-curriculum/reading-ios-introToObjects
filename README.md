@@ -23,12 +23,12 @@ Programming *languages* are said to follow or "fit into" programming paradigms. 
 
 All of these "high-level" programming languages are forms of human abstraction. The terminology of "high-level" versus "low-level" languages are relative terms used to express how far removed that language is from the CPU's understanding of it. The lowest level of programming is [machine language](https://en.wikipedia.org/wiki/Machine_code) (also "machine code") which is essentially some defined way of interpreting actual binary (ones and zeroes). CPUs can only execute (i.e. run) code that's been translated into the binary that it can understand.
 
-![](https://upload.wikimedia.org/wikipedia/commons/c/c0/W65C816S_Machine_Code_Monitor.jpeg)
+![](https://curriculum-content.s3.amazonaws.com/ios-intro-to-objects-unit/machine_code.jpeg)  
 —Machine language is scary. *Machine language monitor in a W65C816S single-board computer, displaying code disassembly, as well as processor register and memory dumps.* [Wikimedia Commons](https://en.wikipedia.org/wiki/Machine_code#/media/File:W65C816S_Machine_Code_Monitor.jpeg)
 
 The trouble with programming in machine language is that it's nigh-unreadable to humans. So, [assembler languages](https://en.wikipedia.org/wiki/Assembly_language) (also "assembly") were developed to make programming a little easier to understand. Assembler languages are still closely related to CPUs and translate pretty readily in machine code. If the machine that you're reading this on has an Intel or AMD CPU, it almost certainly runs on some version of [x86-64 assembler](https://en.wikipedia.org/wiki/X86-64). 
 
-![](https://upload.wikimedia.org/wikipedia/commons/f/f3/Motorola_6800_Assembly_Language.png)
+![](https://curriculum-content.s3.amazonaws.com/ios-intro-to-objects-unit/assembly_language.png)  
 —Assembly language is still pretty scary. *Motorola MC6800 Assembly listing, showing original assembly language and the assembled form* [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Motorola_6800_Assembly_Language.png)
 
 However, assembler is still pretty technical, requiring micro-management instructions for every single operation. So "high-level" or "third-level" languages were developed to bring increased readability via increased abstraction. Third-level languages are compiled down to assembler (which is then compiled down to machine code). Some of the earliest and most recognizable third-level languages include Fortran, Cobol, and [C][c].
@@ -53,7 +53,7 @@ The [C language][c] is a procedural language that has become one of the most wid
 
 Since all computer code boils down to binary, it's natural to wonder "how can a string of ones and zeroes be referred to as an 'object'?" The use of the word "object" is another abstraction of thought. An "object" in code has no more physical form than does a word in any human language. Sure, words have physical representations: speaking a word causes air to vibrate in a sound wave, ink on a page can be shaped into symbols that represent the word, a meaning can be pointed at or mimed out; but none of these are the word itself. Human language is also a system of abstraction: it communicates the *idea* of a thing, but not the thing itself.
 
-![](https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg)  
+![](https://curriculum-content.s3.amazonaws.com/ios-intro-to-objects-unit/MagrittePipe.jpg)    
 —[*The Treachery of Images*][not_a_pipe], [René Magritte][magritte], 1927  
 trans. "This is not a pipe."
 
