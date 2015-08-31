@@ -94,7 +94,7 @@ The `length`, `uppercaseString`, and `lowercaseString` methods on `NSString` tha
 ```objc
 // method syntax (valid)
 
-NSString *magritte = @"Leci n`est pas une pipe.";
+NSString *magritte = @"Ceci n`est pas une pipe.";
 
 NSLog(@"Length: %lu", [magritte length]);
 NSLog(@"%@", [magritte uppercaseString]);
