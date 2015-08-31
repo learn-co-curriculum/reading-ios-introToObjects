@@ -104,15 +104,15 @@ This will print:
 
 ```
 Length: 24
-LECI N`EST PAS UNE PIPE.
-leci n`est pas une pipe.
+CECI N`EST PAS UNE PIPE.
+ceci n`est pas une pipe.
 ```
 But, it's actually better practice to use dot notation when accessing properties:
 
 ```objc
 // dot notation (preferred)
 
-NSString *magritte = @"Leci n`est pas une pipe.";
+NSString *magritte = @"Ceci n`est pas une pipe.";
 
 NSLog(@"Length: %lu", magritte.length);
 NSLog(@"%@", magritte.uppercaseString);
@@ -122,8 +122,8 @@ This will also print:
 
 ```
 Length: 24
-LECI N`EST PAS UNE PIPE.
-leci n`est pas une pipe.
+CECI N`EST PAS UNE PIPE.
+ceci n`est pas une pipe.
 ```
 **Advanced:** *Using* `self.property` *allows access to a property within the same file.*
 
