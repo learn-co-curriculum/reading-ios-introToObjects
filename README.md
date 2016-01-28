@@ -168,4 +168,4 @@ Length: 7
 ```
 Using dot notation improves readability and avoids the stumbling block of counting a group of brackets.
 
-<a href='https://learn.co/lessons/reading-ios-introToObjects' data-visibility='hidden'>View this lesson on Learn.co</a>
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/reading-ios-introToObjects' title='Introduction to Object Orientation'>Introduction to Object Orientation</a> on Learn.co and start learning to code for free.</p>
